@@ -13,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -197,10 +199,11 @@ public class updtheatres extends AppCompatActivity {
             if (view == null) {
                 view = lInflater.inflate(R.layout.itemupd, parent, false);
             }
-            ;
             String[] p = (String[]) getItem(position);
             ((TextView) view.findViewById(R.id.tvText)).setText(p[0]);
             ((TextView) view.findViewById(R.id.tvText1)).setText(p[1]);
+            ((TextView) view.findViewById(R.id.id)).setText(p[2]);
+
 
             return view;
         }
@@ -221,9 +224,11 @@ public class updtheatres extends AppCompatActivity {
             CheckBox ch = (CheckBox) ll.getChildAt(0);
             EditText etn = (EditText) ll.getChildAt(1);
             EditText eta = (EditText) ll.getChildAt(2);
+            TextView idText = (TextView) ll.getChildAt(3);
             if (ch.isChecked()) {
                 String nm = etn.getText().toString();
                 String ad = eta.getText().toString();
+                int id = Integer.parseInt(idText.getText().toString());
                 try {
                     JA.put(m, new JSONObject());
                 } catch (JSONException e) {
@@ -232,7 +237,7 @@ public class updtheatres extends AppCompatActivity {
                 try {
                     JA.getJSONObject(m).put("name", nm);
                     JA.getJSONObject(m).put("address", ad);
-                    JA.getJSONObject(m).put("id", st[2]);
+                    JA.getJSONObject(m).put("id", id);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -241,6 +246,7 @@ public class updtheatres extends AppCompatActivity {
         }
         mtu = new MyTaskU();
         mtu.execute(JA);
+        onclickF(v);
     }
 
     class MyTaskU extends AsyncTask<JSONArray, Void, String> {
@@ -383,6 +389,7 @@ public class updtheatres extends AppCompatActivity {
         }
         mtd = new MyTaskD();
         mtd.execute(JA);
+        onclickF(v);
 
     }
 

@@ -40,7 +40,7 @@ public class film extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_theatre);
+        setContentView(R.layout.activity_film);
         progressBar = findViewById(R.id.progress_circular);
         progressBar.setVisibility(View.INVISIBLE);
         tvInfo = (TextView) findViewById(R.id.tvInfo);
