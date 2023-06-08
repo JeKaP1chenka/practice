@@ -335,7 +335,7 @@ public class newfilm extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = convertView;
             if (view == null) {
-                view = lInflater.inflate(R.layout.adapter3, parent, false);
+                view = lInflater.inflate(R.layout.item, parent, false);
             };
             String[] p =(String[]) getItem(position);
             ((TextView) view.findViewById(R.id.tvText)).setText(p[0]);

@@ -13,7 +13,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -27,12 +34,15 @@ import java.util.List;
 public class film extends AppCompatActivity {
     TextView tvInfo;
     EditText tvName;
+    ProgressBar progressBar;
     film.MyTask mt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_theatre);
+        progressBar = findViewById(R.id.progress_circular);
+        progressBar.setVisibility(View.INVISIBLE);
         tvInfo = (TextView) findViewById(R.id.tvInfo);
         tvName = (EditText) findViewById(R.id.editTextTextPersonName);
     }
@@ -47,6 +57,7 @@ public class film extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             tvInfo.setText("Begin");
+            progressBar.setVisibility(View.VISIBLE);
         }
         @Override
         protected void onPostExecute(ArrayList<String[]> result) {
@@ -56,6 +67,7 @@ public class film extends AppCompatActivity {
             ListView lvMain = (ListView) findViewById(R.id.lvMain);
             lvMain.setAdapter(clAdapter);
             tvInfo.setText("Результат");
+            progressBar.setVisibility(View.INVISIBLE);
 
         }
 
@@ -64,9 +76,10 @@ public class film extends AppCompatActivity {
         protected ArrayList<String[]> doInBackground(String... params) {
             ArrayList<String[]> res = new ArrayList<>();
             HttpURLConnection myConnection = null;
+            String line = "";
+            String total = "";
             try {
-                URL mySite = new
-                        URL("http://host1857461.hostland.pro/practice/kino/films?Name=" + params[0]);
+                URL mySite = new URL("http://host1857461.hostland.pro/practice/kino/films?Name=" + params[0]);
                 myConnection =
                         (HttpURLConnection) mySite.openConnection();
             } catch (MalformedURLException e) {
@@ -95,62 +108,35 @@ public class film extends AppCompatActivity {
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                JsonReader jsonReader;
-                jsonReader = null;
-                jsonReader = new JsonReader(responseBodyReader);
-                try {
-                    jsonReader.beginArray();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                String key = null;
-                String value = null;
+                BufferedReader r = new BufferedReader(new InputStreamReader(responseBody));
                 while (true) {
                     try {
-                        if (!jsonReader.hasNext()) break;
+                        if (!((line = r.readLine()) != null)) break;
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    try {
-                        jsonReader.beginObject();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    ;
-                    String[] str = new String[2];
-                    int n = 0;
-                    while (true) {
-                        try {
-                            if (!jsonReader.hasNext()) break;
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            key = jsonReader.nextName();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-// sb.append("\r\n : " +key);
-                        try {
-                            value = jsonReader.nextString();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-// sb.append("\r\n : " +value);
-                        str[n] = value;
-                        n++;
-                    }
-                    try {
-                        jsonReader.endObject();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    res.add(str);
+                    total = total + line;
                 }
+                JSONArray JA = null;
                 try {
-                    jsonReader.endArray();
-                } catch (IOException e) {
+                    JA = new JSONArray(total);
+                } catch (JSONException e) {
                     e.printStackTrace();
+                }
+                for (int j = 0; j < JA.length(); j++) {
+                    JSONObject JO = null;
+                    try {
+                        JO = JA.getJSONObject(j);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    String[] st = new String[1];
+                    try {
+                        st[0] = JO.getString("name").toString();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    res.add(st);
                 }
             }
             myConnection.disconnect();
@@ -185,11 +171,11 @@ public class film extends AppCompatActivity {
         {
             View view = convertView;
             if (view == null) {
-                view = lInflater.inflate(R.layout.adapter, parent, false);
+                view = lInflater.inflate(R.layout.item, parent, false);
             };
             String[] p =(String[]) getItem(position);
             ((TextView) view.findViewById(R.id.tvText)).setText(p[0]);
-            ((TextView) view.findViewById(R.id.tvText1)).setText(p[1]);
+//            ((TextView) view.findViewById(R.id.tvText1)).setText(p[1]);
             return view;
         };
     }

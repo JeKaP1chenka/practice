@@ -143,7 +143,6 @@ public class theatre extends AppCompatActivity {
         mt.execute(tvName.getText().toString());
     }
 
-
     class ClAdapter extends BaseAdapter {
         Context ctx;
         LayoutInflater lInflater;
