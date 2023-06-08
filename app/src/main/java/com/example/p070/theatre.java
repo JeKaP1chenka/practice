@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -32,6 +33,7 @@ public class theatre extends AppCompatActivity {
     TextView tvInfo;
     EditText tvName;
     theatre.MyTask mt;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,27 +41,27 @@ public class theatre extends AppCompatActivity {
         setContentView(R.layout.activity_theatre);
         tvInfo = (TextView) findViewById(R.id.tvInfo);
         tvName = (EditText) findViewById(R.id.editTextTextPersonName);
+        progressBar = (ProgressBar) findViewById(R.id.progress_circular);
+        progressBar.setVisibility(View.INVISIBLE);
     }
-    public void onclick(View v) {
-        mt = new theatre.MyTask();
-        mt.execute(tvName.getText().toString());
-    }
+
     public class MyTask extends AsyncTask<String, Void, ArrayList<String[]>> {
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             tvInfo.setText("Begin");
+            progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
         protected ArrayList<String[]> doInBackground(String... params) {
             ArrayList<String[]> res = new ArrayList<>();
             HttpURLConnection myConnection = null;
-            String line="";
-            String total="";
+            String line = "";
+            String total = "";
             try {
-                // http://127.0.0.1:8080/kino/filtrtheatre?name=
-                URL mySite = new URL("http://host1857461.hostland.pro/practice/kino/filtrtheatre?name="+params[0]);
+                URL mySite = new URL("http://host1857461.hostland.pro/practice/kino/filtrtheatre?name=" + params[0]);
                 myConnection =
                         (HttpURLConnection) mySite.openConnection();
             } catch (MalformedURLException e) {
@@ -68,20 +70,20 @@ public class theatre extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            int i=0;
+            int i = 0;
             try {
                 i = myConnection.getResponseCode();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if (i==200) {
-                InputStream responseBody=null;
+            if (i == 200) {
+                InputStream responseBody = null;
                 try {
                     responseBody = myConnection.getInputStream();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                InputStreamReader responseBodyReader =null;
+                InputStreamReader responseBodyReader = null;
                 try {
                     responseBodyReader =
                             new InputStreamReader(responseBody, "UTF-8");
@@ -95,22 +97,22 @@ public class theatre extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    total=total+line;
+                    total = total + line;
                 }
-                JSONArray JA=null;
+                JSONArray JA = null;
                 try {
-                    JA=new JSONArray(total);
+                    JA = new JSONArray(total);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                for (int j=0;j<JA.length();j++) {
-                    JSONObject JO=null;
+                for (int j = 0; j < JA.length(); j++) {
+                    JSONObject JO = null;
                     try {
-                        JO=JA.getJSONObject(j);
+                        JO = JA.getJSONObject(j);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    String[] st= new String[2];
+                    String[] st = new String[2];
                     try {
                         st[0] = JO.getString("name").toString();
                         st[1] = JO.getString("address").toString();
@@ -131,7 +133,14 @@ public class theatre extends AppCompatActivity {
             ListView lvMain = (ListView) findViewById(R.id.lvMain);
             lvMain.setAdapter(clAdapter);
             tvInfo.setText("End");
+            progressBar.setVisibility(View.INVISIBLE);
         }
+
+    }
+
+    public void onclick(View v) {
+        mt = new theatre.MyTask();
+        mt.execute(tvName.getText().toString());
     }
 
 
