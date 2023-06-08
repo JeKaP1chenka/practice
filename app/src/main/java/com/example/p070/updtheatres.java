@@ -313,7 +313,7 @@ public class updtheatres extends AppCompatActivity {
                     }
                     total = total + line;
                 }
-                JSONArray JA = null;
+//                JSONArray JA = null;
 //                try {
 //                    JA = new JSONArray(total);
 //                } catch (JSONException e) {
