@@ -5,4 +5,5 @@ public class Data {
     static String filtrTheatre = URL + "filtrtheatre?name=";
     static String newTheatre = URL + "newtheatre";
     static String films = URL + "films?name=";
+    static String newFilm = URL + "newfilm";
 }
