@@ -18,6 +18,10 @@
         android:title="Новый фильм"
         android:id="@+id/m4"
         android:visible="true" />
+    <item
+        android:title="обновить кинотеатр"
+        android:id="@+id/m5"
+        android:visible="true" />
 
 
 

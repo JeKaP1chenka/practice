@@ -11,6 +11,6 @@ public class Data {
     static String films = URL + "films?name=";
     static String newFilm = URL + "newfilm/index.php";
 
-    static String updateTheatre = URL + "update_theatre";
-    static String deleteTheatre = URL + "delete_theatre";
+    static String updateTheatre = URL + "update_theatre/index.php";
+    static String deleteTheatre = URL + "delete_theatre/index.php";
 }

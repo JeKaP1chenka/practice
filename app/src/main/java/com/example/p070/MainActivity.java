@@ -37,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.m4:
                 intent = new Intent(this, newfilm.class);
                 break;
+            case R.id.m5:
+                intent = new Intent(this, updtheatres.class);
+                break;
+
 
 
             default:
