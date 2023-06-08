@@ -314,26 +314,26 @@ public class updtheatres extends AppCompatActivity {
                     total = total + line;
                 }
                 JSONArray JA = null;
-                try {
-                    JA = new JSONArray(total);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                for (int j = 0; j < JA.length(); j++) {
-                    JSONObject JO = null;
-                    try {
-                        JO = JA.getJSONObject(j);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    String[] st = new String[2];
-                    try {
-                        st[0] = JO.getString("result").toString();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    res.add(st);
-                }
+//                try {
+//                    JA = new JSONArray(total);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                for (int j = 0; j < JA.length(); j++) {
+//                    JSONObject JO = null;
+//                    try {
+//                        JO = JA.getJSONObject(j);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                    String[] st = new String[2];
+//                    try {
+//                        st[0] = JO.getString("result").toString();
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                    res.add(st);
+//                }
             }
             return total;
         }
@@ -448,27 +448,27 @@ public class updtheatres extends AppCompatActivity {
                     }
                     total = total + line;
                 }
-                JSONArray JA = null;
-                try {
-                    JA = new JSONArray(total);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                for (int j = 0; j < JA.length(); j++) {
-                    JSONObject JO = null;
-                    try {
-                        JO = JA.getJSONObject(j);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    String[] st = new String[2];
-                    try {
-                        st[0] = JO.getString("result").toString();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    res.add(st);
-                }
+//                JSONArray JA = null;
+//                try {
+//                    JA = new JSONArray(total);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                for (int j = 0; j < JA.length(); j++) {
+//                    JSONObject JO = null;
+//                    try {
+//                        JO = JA.getJSONObject(j);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                    String[] st = new String[2];
+//                    try {
+//                        st[0] = JO.getString("result").toString();
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                    res.add(st);
+//                }
             }
             return total;
         }
