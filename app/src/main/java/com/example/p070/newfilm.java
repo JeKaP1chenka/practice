@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
@@ -46,11 +47,14 @@ public class newfilm extends AppCompatActivity {
     //    ArrayList <newfilm.MyTaskTF>mttf=new ArrayList <newfilm.MyTaskTF>();
     newfilm.MyTaskTF mttf;
     ListView lvMain;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newfilm);
+        progressBar = findViewById(R.id.progress_circular);
+        progressBar.setVisibility(View.INVISIBLE);
         tvInfo = (TextView) findViewById(R.id.tvInfo);
         tvName = (EditText) findViewById(R.id.editTextTextPersonName);
         lvMain = (ListView) findViewById(R.id.lvMain);
@@ -66,6 +70,7 @@ public class newfilm extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             tvInfo.setText("Begin");
+            progressBar.setVisibility(View.VISIBLE);
         }
         @Override
         protected ArrayList<String[]> doInBackground(Void... params) {
@@ -150,6 +155,7 @@ public class newfilm extends AppCompatActivity {
             lvMain.setAdapter(clAdapter);
 //            tvInfo.setText("End");
             tvButton.setEnabled(true);
+            progressBar.setVisibility(View.INVISIBLE);
         }
     }
     class ClAdapter extends BaseAdapter {
@@ -317,7 +323,14 @@ public class newfilm extends AppCompatActivity {
             }
             mttf = new newfilm.MyTaskTF();
             mttf.execute(JA);
+            progressBar.setVisibility(View.INVISIBLE);
 
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
         }
     }
     class MyTaskTF extends AsyncTask<JSONArray, Void, String > {
@@ -422,9 +435,16 @@ public class newfilm extends AppCompatActivity {
         }
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             tvInfo.setText("End");
+            progressBar.setVisibility(View.INVISIBLE);
             return;
         }
     }

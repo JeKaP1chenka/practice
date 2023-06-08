@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -47,6 +48,7 @@ public class updtheatres extends AppCompatActivity {
     //    ArrayList<updtheatres.MyTaskU>mtu=new ArrayList <updtheatres.MyTaskU>();
 //    ArrayList<updtheatres.MyTaskD>mtd=new ArrayList <updtheatres.MyTaskD>();
     ListView lvMain;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,8 @@ public class updtheatres extends AppCompatActivity {
         tvButton = (Button) findViewById(R.id.tvButtonF);
         tvButtonU = (Button) findViewById(R.id.tvButtonU);
         tvButtonD = (Button) findViewById(R.id.tvButtonD);
+        progressBar = findViewById(R.id.progress_circular);
+        progressBar.setVisibility(View.INVISIBLE);
 
     }
 
@@ -72,6 +76,7 @@ public class updtheatres extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             tvInfo.setText("Begin");
+            progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -155,6 +160,7 @@ public class updtheatres extends AppCompatActivity {
             tvButtonU.setEnabled(true);
             tvButtonD.setEnabled(true);
             tvButton.setEnabled(false);
+            progressBar.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -238,6 +244,12 @@ public class updtheatres extends AppCompatActivity {
     }
 
     class MyTaskU extends AsyncTask<JSONArray, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+        }
 
         @Override
         protected String doInBackground(JSONArray... jsonArrays) {
@@ -342,7 +354,7 @@ public class updtheatres extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             tvInfo.setText("End");
-            return;
+            progressBar.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -474,9 +486,16 @@ public class updtheatres extends AppCompatActivity {
         }
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             tvInfo.setText("End");
+            progressBar.setVisibility(View.INVISIBLE);
             return;
         }
     }
