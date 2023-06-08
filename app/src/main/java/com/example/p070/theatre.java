@@ -61,7 +61,7 @@ public class theatre extends AppCompatActivity {
             String line = "";
             String total = "";
             try {
-                URL mySite = new URL("http://host1857461.hostland.pro/practice/kino/filtrtheatre?name=" + params[0]);
+                URL mySite = new URL(Data.filtrTheatre + params[0]);
                 myConnection =
                         (HttpURLConnection) mySite.openConnection();
             } catch (MalformedURLException e) {

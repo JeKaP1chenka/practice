@@ -79,7 +79,7 @@ public class film extends AppCompatActivity {
             String line = "";
             String total = "";
             try {
-                URL mySite = new URL("http://host1857461.hostland.pro/practice/kino/films?Name=" + params[0]);
+                URL mySite = new URL(Data.films + params[0]);
                 myConnection =
                         (HttpURLConnection) mySite.openConnection();
             } catch (MalformedURLException e) {
