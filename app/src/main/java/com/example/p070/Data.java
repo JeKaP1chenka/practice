@@ -1,7 +1,7 @@
 package com.example.p070;
 
 public class Data {
-    static String URL = "http://host1857461.hostland.pro/practice/kino/";
+    static String URL = "http://185.221.214.178:8000/";
 
     static String newTheatre_Film = URL + "newtheatre_film/index.php";
     static String allTheatre = URL + "alltheatre";
